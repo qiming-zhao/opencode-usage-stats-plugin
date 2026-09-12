@@ -2,10 +2,10 @@
   "name": "opencode-usage-stats-plugin",
   "version": "0.1.0",
   "description": "An OpenCode plugin that tracks LLM token usage and displays interactive statistics in the terminal UI.",
-  "private": true,
   "type": "module",
   "license": "MIT",
   "author": "Ming (https://github.com/qiming-zhao)",
+  "files": ["dist", "README.md", "README.zh-CN.md", "LICENSE", "stats.config.json"],
   "keywords": [
     "opencode",
     "opencode-plugin",
@@ -24,13 +24,15 @@
   },
   "exports": { "./server": "./dist/server.mjs", "./tui": "./dist/tui.mjs" },
   "engines": { "opencode": ">=1.18.30 <1.19.0" },
-  "scripts": { "build": "bun build.ts", "test": "bun test", "typecheck": "tsc --noEmit" },
-  "devDependencies": {
+  "scripts": { "build": "bun build.ts", "test": "bun test", "typecheck": "tsc --noEmit", "prepublishOnly": "bun run build" },
+  "dependencies": {
     "@opencode-ai/plugin": "1.18.30",
     "@opentui/core": "0.4.5",
     "@opentui/keymap": "0.4.5",
     "@opentui/solid": "0.4.5",
-    "solid-js": "1.9.12",
+    "solid-js": "1.9.12"
+  },
+  "devDependencies": {
     "@types/bun": "1.2.22",
     "typescript": "5.9.3"
   }

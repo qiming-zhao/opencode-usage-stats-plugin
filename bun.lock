@@ -3,13 +3,15 @@
   "workspaces": {
     "": {
       "name": "opencode-usage-stats-plugin",
-      "devDependencies": {
+      "dependencies": {
         "@opencode-ai/plugin": "1.18.30",
         "@opentui/core": "0.4.5",
         "@opentui/keymap": "0.4.5",
         "@opentui/solid": "0.4.5",
-        "@types/bun": "1.2.22",
         "solid-js": "1.9.12",
+      },
+      "devDependencies": {
+        "@types/bun": "1.2.22",
         "typescript": "5.9.3",
       },
     },
