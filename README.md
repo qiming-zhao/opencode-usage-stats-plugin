@@ -21,9 +21,35 @@ An [OpenCode](https://opencode.ai) plugin that tracks LLM token usage and displa
 ## Requirements
 
 - [OpenCode](https://opencode.ai) >= 1.18.30, < 1.19.0
-- [Bun](https://bun.sh) runtime (for building and running tests)
+- [Bun](https://bun.sh) runtime (only needed for building from source)
 
 ## Installation
+
+### From npm (recommended)
+
+1. Add the plugin to `~/.config/opencode/opencode.json`:
+
+   ```jsonc
+   {
+     "plugin": ["opencode-usage-stats-plugin"]
+   }
+   ```
+
+2. Add the plugin to `~/.config/opencode/tui.json`:
+
+   ```jsonc
+   {
+     "plugin": ["opencode-usage-stats-plugin"]
+   }
+   ```
+
+   The same package name goes in both files: OpenCode loads the server entry from the first and the TUI entry from the second.
+
+3. Restart OpenCode. The plugin is installed automatically and will begin tracking usage.
+
+> **Database location for npm installs:** the database defaults to `~/.config/opencode/usage-stats-data`, outside the package directory, so updating the plugin never wipes your history. Set `dataDir` to an absolute path in your config file if you want it elsewhere (see Configuration).
+
+### From source (for local development)
 
 1. Clone the repository:
 
@@ -86,7 +112,11 @@ Open the usage panel in OpenCode via:
 
 ## Configuration
 
-The plugin reads from `stats.config.json` in the plugin root:
+The plugin looks for configuration in this order (first match wins):
+
+1. `~/.config/opencode/usage-stats-plugin.json` (user-level, recommended -- survives plugin updates)
+2. `stats.config.json` in the plugin root (legacy, for local installs)
+3. Built-in defaults
 
 ```json
 {
@@ -97,10 +127,10 @@ The plugin reads from `stats.config.json` in the plugin root:
 
 | Field | Description | Default |
 |-------|-------------|---------|
-| `dataDir` | Directory for the SQLite database | `./data` |
+| `dataDir` | Directory for the SQLite database. Absolute paths are used as-is; relative paths resolve against the directory of the loaded config file | `~/.config/opencode/usage-stats-data` (or `./data` under the plugin root for legacy local installs) |
 | `timeZone` | IANA timezone for day boundaries | `Asia/Shanghai` |
 
-The timezone can also be changed from the Settings tab in the TUI panel.
+The timezone can also be changed from the Settings tab in the TUI panel; the change is saved to the user-level config file.
 
 ## Development
 

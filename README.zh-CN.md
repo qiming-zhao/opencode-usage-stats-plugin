@@ -21,9 +21,35 @@
 ## 环境要求
 
 - [OpenCode](https://opencode.ai) >= 1.18.30, < 1.19.0
-- [Bun](https://bun.sh) 运行时（用于构建和运行测试）
+- [Bun](https://bun.sh) 运行时（仅从源码构建时需要）
 
 ## 安装
+
+### 从 npm 安装（推荐）
+
+1. 在 `~/.config/opencode/opencode.json` 中添加：
+
+   ```jsonc
+   {
+     "plugin": ["opencode-usage-stats-plugin"]
+   }
+   ```
+
+2. 在 `~/.config/opencode/tui.json` 中添加：
+
+   ```jsonc
+   {
+     "plugin": ["opencode-usage-stats-plugin"]
+   }
+   ```
+
+   两个文件写同一个包名即可：OpenCode 从前者加载 server 入口，从后者加载 TUI 入口。
+
+3. 重启 OpenCode，插件会自动安装并开始追踪用量。
+
+> **npm 安装的数据库位置说明：** 数据库默认放在 `~/.config/opencode/usage-stats-data`，在插件包目录之外，更新插件不会清空历史。如需换位置，请在配置文件中将 `dataDir` 设为绝对路径（见配置一节）。
+
+### 从源码安装（本地开发用）
 
 1. 克隆仓库：
 
@@ -86,7 +112,11 @@
 
 ## 配置
 
-插件从插件根目录的 `stats.config.json` 读取配置：
+插件按以下顺序查找配置（命中第一个即用）：
+
+1. `~/.config/opencode/usage-stats-plugin.json`（用户级，推荐——插件更新删不掉）
+2. 插件根目录的 `stats.config.json`（旧方式，本地安装用）
+3. 内置默认值
 
 ```json
 {
@@ -97,10 +127,10 @@
 
 | 字段 | 说明 | 默认值 |
 |------|------|--------|
-| `dataDir` | SQLite 数据库存储目录 | `./data` |
+| `dataDir` | SQLite 数据库存储目录。绝对路径原样使用；相对路径相对实际载入的配置文件所在目录解析 | `~/.config/opencode/usage-stats-data`（旧式本地安装为插件根目录下的 `./data`） |
 | `timeZone` | IANA 时区，用于日期边界计算 | `Asia/Shanghai` |
 
-时区也可以在 TUI 面板的 Settings 标签页中更改。
+时区也可以在 TUI 面板的 Settings 标签页中更改，改动会保存到用户级配置文件。
 
 ## 开发
 
