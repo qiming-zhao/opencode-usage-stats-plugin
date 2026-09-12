@@ -1,11 +1,11 @@
 {
   "name": "opencode-usage-stats-plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "An OpenCode plugin that tracks LLM token usage and displays interactive statistics in the terminal UI.",
   "type": "module",
   "license": "MIT",
   "author": "Ming (https://github.com/qiming-zhao)",
-  "files": ["dist", "README.md", "README.zh-CN.md", "LICENSE", "stats.config.json"],
+  "files": ["dist", "README.md", "README.zh-CN.md", "LICENSE"],
   "keywords": [
     "opencode",
     "opencode-plugin",
